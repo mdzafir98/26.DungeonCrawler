@@ -1,0 +1,49 @@
+INSTALLATION for emsdk
+
+**Note only raylib ver 4.5.0 is supported for emsdk
+
+For the very beginning you have to install emscripten SDK. As stated at the site "Emscripten is a complete compiler toolchain to WebAssembly, using LLVM, with a special focus on speed, size, and the Web platform."
+
+Installation steps are prety easy:
+
+    git clone https://github.com/emscripten-core/emsdk.git
+    cd emsdk
+    git pull
+    ./emsdk install latest
+    ./emsdk activate latest
+    source ./emsdk_env.sh
+
+After this steps you will have emscripten installed into the directory you've cloned it.
+
+Then, you need to compile raylib itself to be usable in Web:
+
+Go to the raylib/src directory and open Makefile, find where EMSDK_PATH variable is being defined and edit it accordingly to your setup. If you downloaded emscripten into /home/user/emsdk directory then put it in there:
+
+EMSDK_PATH ?= /home/user/emsdk
+
+Fix PYTHON_PATH definition as well.
+
+then launch execute make:
+
+make -e PLATFORM=PLATFORM_WEB -B Notice -e option. That option allows to propagate and override environment variables to makefile.
+
+Generated libraylib.a is placed in raylib\src\libraylib.a directory.
+
+After that you can cd into raylib/examples/, fix Makefile as described above and launch make -e PLATFORM=PLATFORM_WEB -B again.
+
+After that you would be able to start python3 -m http.server in that directory, navigate to http://0.0.0.0:8000/ in your browser and see examples.
+
+AFTER installing -> run em++ --version to check
+
+!IMPORTANT steps to do before compiling raylib c/cpp code to webasm!
+
+Steps to run emsdk virtual environment
+    1) navigate to emsdk directory
+    2) run ./emsdk activate latest
+    3) run source ./emsdk_env.sh
+
+Steps to run WEB GAME
+    1) bash build.bash
+    2) run python3 -m http.server
+    3) goto browser
+    4) goto http://127.0.0.0:8000/a.html
