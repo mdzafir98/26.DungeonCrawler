@@ -4,6 +4,7 @@
 #include <iostream>
 #include "Constants.h"
 #include "Timer.h"
+#include <stdlib.h>
 
 class Enemy{
 public:

@@ -4,10 +4,12 @@ work on collision with player and platform
 make scrolling platformer camera2D
 make ENEMY entity behavior
 make ENEMY entity collision
+make SPAWNER entity animation
+make ENEMY entity random jump timer
 
 TASKS remaining:
+refactor ENEMY initTexture function to load texture file only once (use pointer)
 make ENEMY entity random speed and direction
-make ENEMY entity random jump timer
 make simple text file to convert to array for level design
 fix the fire laser sound effect glitching when holding down mouse button
 fix the sounds and music for raylib web game

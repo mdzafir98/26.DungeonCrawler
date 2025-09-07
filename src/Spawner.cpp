@@ -20,7 +20,7 @@ void Spawner::initTexture(){
 }
 
 void Spawner::initTimer(){
-    m_spawnTime={15.f};
+    m_spawnTime={10.f};
 }
 
 void Spawner::draw(){

@@ -17,11 +17,14 @@ void Enemy::initTexture(){
 }
 
 void Enemy::initTimer(){
-    jumpLife={3.f};
+    // generate random number between 2 and 4
+    srand((unsigned int)time(NULL));
+    jumpLife=rand()%3+2;
+    std::cout<<"Enemy entity jump life: "<<jumpLife<<"\n";
 }
 
 void Enemy::draw(){
-    // DRAW ANIMATION CYCLE
+    // draw animation cycle
     DrawTextureRec(m_texture,frameRec,m_pos,m_shade);
 }
 
