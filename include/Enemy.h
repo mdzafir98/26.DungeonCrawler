@@ -18,6 +18,7 @@ public:
 
     // MOVEMENT
     void setPos(Vector2 newPos);
+    void setVelocity(Vector2 newVel);
 
 private:
     void initTexture();

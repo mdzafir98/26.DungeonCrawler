@@ -76,7 +76,10 @@ private:
     Texture2D* normalBGPtr = &normalBG;
 
 public:
+    // vector that contains the platform
     std::vector<Wall*> wallVector;
+
+    // vector that contains the background
     std::vector<Wall*> bgVector;
 
 private:

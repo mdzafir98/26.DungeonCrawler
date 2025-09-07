@@ -38,6 +38,9 @@ private:
     void updateBulletCollision();
     void deleteInactiveBullet();
 
+    // ENEMY FUNCTIONS
+    void updateEnemyCollision();
+
 private:
     // CAMERA
     Camera2D camera={0};

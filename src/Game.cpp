@@ -25,16 +25,14 @@ void Game::update(){
     player->update();
     spawner->update();
     this->updatePlayerCollision();
+    this->updateEnemyCollision();
     this->updateBulletCollision();
     this->deleteInactiveBullet();
-    // this->updateCameraCentreInWindow(&camera,512.f,512.f,1000.f);
     this->updateCameraCentre(&camera,GetScreenWidth(),GetScreenHeight());
     this->updateMusic();
 }
 
 void Game::draw(){
-    // this->drawBackground();
-    // player->draw();
     BeginMode2D(camera);
         this->drawBackground();
         this->drawGameInstructions();
@@ -102,14 +100,6 @@ void Game::playerControls(){
         player->setState(IDLE);
     }
 
-    // LOOK CONTROLS
-    // if(IsKeyDown(KEY_LEFT)){
-    //     player->lookLeft();
-    // }
-    // if(IsKeyDown(KEY_RIGHT)){
-    //     player->lookRight();
-    // }
-
     // JUMP CONTROLS
     if(IsKeyPressed(KEY_SPACE)){
         player->setState(JUMP);
@@ -124,49 +114,13 @@ void Game::playerControls(){
         player->attack();
         PlaySound(shootLaser);
     }
-
-    // if(IsKeyDown(KEY_S)){
-    //     player->setState(ATTACK);
-    //     player->attack();
-    //     PlaySound(shootLaser);
-    // }
 }
 
 void Game::updatePlayerCollision(){
 
-    // NEED TO GET THE LOOP TO STOP REPEATING IF PLAYER COLLIDES ONCE
-    // int n=0;
-    // if(playerCollided==false){
-    //     for(auto& wall:background.wallVector){
-    //
-    //         // PLAYER COLLISION WITH WALL IN X-PLANE
-    //         if(CheckCollisionRecs(player->getRect(),wall->bound.left)){
-    //             player->setPos({wall->getPos().x-64.f,player->getPos().y});
-    //             break;
-    //         }
-    //         else if(CheckCollisionRecs(player->getRect(),wall->bound.right)){
-    //             player->setPos({wall->getPos().x+64.f,player->getPos().y});
-    //             break;
-    //         }
-    //
-    //         // PLAYER COLLISION WITH WALL IN Y-PLANE
-    //         if(CheckCollisionRecs(player->getRect(),wall->bound.top)){
-    //             player->setVelocity({0,0});
-    //             player->setPos({player->getPos().x,wall->getPos().y-64.f});
-    //             break;
-    //         }else if(CheckCollisionRecs(player->getRect(),wall->bound.bot)){
-    //             player->setPos({player->getPos().x,wall->getPos().y+64.f});
-    //             break;
-    //         }
-    //         // n++;
-    //         // std::cout<<"WALL COLLISION LOOP: "<<n<<"\n";
-    //         playerCollided={true};
-    //     }
-    // }
-
     for(auto& wall:background.wallVector){
 
-        // PLAYER COLLISION WITH WALL IN X-PLANE
+        // player collision with wall in x-plane
         if(CheckCollisionRecs(player->getRect(),wall->bound.left)){
             player->setPos({wall->getPos().x-64.f,player->getPos().y});
             break;
@@ -176,7 +130,7 @@ void Game::updatePlayerCollision(){
             break;
         }
 
-        // PLAYER COLLISION WITH WALL IN Y-PLANE
+        // player collision with wall in y-plane
         if(CheckCollisionRecs(player->getRect(),wall->bound.top)){
             player->setVelocity({0,0});
             player->setPos({player->getPos().x,wall->getPos().y-64.f});
@@ -186,7 +140,31 @@ void Game::updatePlayerCollision(){
             break;
         }
     }
-    // std::cout<<"CHECK ON GROUND: "<<checkOnGround<<" "<<player->getGroundLevel()<<"\n";
+}
+
+void Game::updateEnemyCollision(){
+    for(auto& enemy:spawner->enemyVector){
+        for(auto& wall:background.wallVector){
+   
+            if(CheckCollisionRecs(enemy->getRect(),wall->bound.left)){
+                enemy->setPos({wall->getPos().x-64.f,enemy->getPos().y});
+                break;
+            }
+            else if(CheckCollisionRecs(enemy->getRect(),wall->bound.right)){
+                enemy->setPos({wall->getPos().x+64.f,enemy->getPos().y});
+                break;
+            }
+
+            if(CheckCollisionRecs(enemy->getRect(),wall->bound.top)){
+                enemy->setVelocity({0,0});
+                enemy->setPos({enemy->getPos().x,wall->getPos().y-64.f});
+                break;
+            }else if(CheckCollisionRecs(enemy->getRect(),wall->bound.bot)){
+                enemy->setPos({enemy->getPos().x,wall->getPos().y+64.f});
+                break;
+            }
+        }
+    }
 }
 
 void Game::updateBulletCollision(){
@@ -207,7 +185,6 @@ void Game::deleteInactiveBullet(){
             ++it;
         }
     }
-    // std::cout<<"NUMBER OF BULLET IN VECTOR: "<<player->bulletVector.size()<<"\n";
 }
 
 void Game::initMusic(){

@@ -1,11 +1,13 @@
 TASKS completed:
-make sprite animation for walk, jump, shoot (DONE)
-work on collision with player and platform (DONE)
-make scrolling platformer camera2D (DONE)
-make ENEMY entity behavior (DONE)
+make sprite animation for walk, jump, shoot
+work on collision with player and platform
+make scrolling platformer camera2D
+make ENEMY entity behavior
+make ENEMY entity collision
 
 TASKS remaining:
 make ENEMY entity random speed and direction
+make ENEMY entity random jump timer
 make simple text file to convert to array for level design
 fix the fire laser sound effect glitching when holding down mouse button
 fix the sounds and music for raylib web game

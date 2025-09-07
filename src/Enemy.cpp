@@ -106,6 +106,10 @@ void Enemy::setPos(Vector2 newPos){
     m_pos=newPos;
 }
 
+void Enemy::setVelocity(Vector2 newVel){
+    m_velocity=newVel;
+}
+
 void Enemy::moveRight(){
     m_pos.x += m_speed*GetFrameTime();
 }
