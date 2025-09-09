@@ -26,6 +26,7 @@ void Game::update(){
     spawner->update();
     this->updatePlayerCollision();
     this->updateEnemyCollision();
+    this->updateEnemy();
     this->updateBulletCollision();
     this->deleteInactiveBullet();
     this->updateCameraCentre(&camera,GetScreenWidth(),GetScreenHeight());
@@ -124,8 +125,7 @@ void Game::updatePlayerCollision(){
         if(CheckCollisionRecs(player->getRect(),wall->bound.left)){
             player->setPos({wall->getPos().x-64.f,player->getPos().y});
             break;
-        }
-        else if(CheckCollisionRecs(player->getRect(),wall->bound.right)){
+        }else if(CheckCollisionRecs(player->getRect(),wall->bound.right)){
             player->setPos({wall->getPos().x+64.f,player->getPos().y});
             break;
         }
@@ -167,11 +167,37 @@ void Game::updateEnemyCollision(){
     }
 }
 
+void Game::updateEnemy(){
+
+    // delete the enemy that got killed and remove from std::vector
+    unsigned counter=0;
+    for(auto& enemy:spawner->enemyVector){
+        if(enemy->active==false){
+            delete spawner->enemyVector.at(counter);
+            spawner->enemyVector.erase(spawner->enemyVector.begin()+counter);
+            --counter;
+            std::cout<<"Enemy vector: "<< spawner->enemyVector.size()<<"\n";
+        }
+        ++counter;
+    }
+}
+
 void Game::updateBulletCollision(){
+    // bullet-wall collision
     for(auto& bullet:player->bulletVector){
         for(auto& wall:background.wallVector){
-            if(CheckCollisionRecs(bullet.getRect(), wall->getRect())){
+            if(CheckCollisionRecs(bullet.getRect(),wall->getRect())){
                 bullet.active={false};
+            }
+        }
+    }
+
+    // bullet-enemy collision
+    for(auto& bullet:player->bulletVector){
+        for(auto& enemy:spawner->enemyVector){
+            if(CheckCollisionRecs(bullet.getRect(),enemy->getRect())){
+                bullet.active={false};
+                enemy->getDamaged();
             }
         }
     }

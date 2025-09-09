@@ -40,6 +40,7 @@ private:
 
     // ENEMY FUNCTIONS
     void updateEnemyCollision();
+    void updateEnemy();
 
 private:
     // CAMERA
@@ -62,5 +63,4 @@ private:
 
     // ENEMY TEST
     Spawner* spawner;
-    // Enemy* enemy;
 };

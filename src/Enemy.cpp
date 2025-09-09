@@ -7,12 +7,13 @@ Enemy::Enemy(Vector2 pos, float speed){
 }
 
 void Enemy::init(){
+    m_health=5;
     this->initTexture();
     this->initTimer();
 }
 
 void Enemy::initTexture(){
-    m_texture=LoadTexture("resource/GREEN-GHOST-RESRC/03.SPRITE SHEET/PURPLE-IDLE.png");
+    // m_texture=LoadTexture("resource/GREEN-GHOST-RESRC/03.SPRITE SHEET/PURPLE-IDLE.png");
     frameRec={0.f,0.f,64.f,64.f};
 }
 
@@ -25,16 +26,20 @@ void Enemy::initTimer(){
 
 void Enemy::draw(){
     // draw animation cycle
-    DrawTextureRec(m_texture,frameRec,m_pos,m_shade);
+    if(active){
+        DrawTextureRec(m_texture,frameRec,m_pos,m_shade);
+    }
 }
 
 void Enemy::update(){
-    // UPDATE GRAVITY
-    m_pos=Vector2Add(m_pos,m_velocity);
-    this->clampToGround();
-    this->updateCollision();
-    this->updateMovement();
-    this->updateAnimation();
+    this->checkHealth();
+    if(active){
+        m_pos=Vector2Add(m_pos,m_velocity);
+        this->clampToGround();
+        this->updateCollision();
+        this->updateMovement();
+        this->updateAnimation();
+    }
 }
 
 void Enemy::updateAnimation(){
@@ -113,6 +118,15 @@ void Enemy::setVelocity(Vector2 newVel){
     m_velocity=newVel;
 }
 
+void Enemy::setTexture(Texture2D* texture){
+    m_texture=*texture;
+}
+
+void Enemy::getDamaged(){
+    m_health--;
+    std::cout<<"Enemy damaged."<<"\n";
+}
+
 void Enemy::moveRight(){
     m_pos.x += m_speed*GetFrameTime();
 }
@@ -143,5 +157,11 @@ void Enemy::clampToGround(){
     }else{
         m_pos.y = m_groundLevel-m_height;
         m_velocity.y=0;
+    }
+}
+
+void Enemy::checkHealth(){
+    if(m_health<=0){
+        active=false;
     }
 }

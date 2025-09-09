@@ -34,7 +34,9 @@ private:
     void drawAttackAnimation();
 
 public:
+    // enemy variables
     std::vector<Enemy*> enemyVector;
+    Texture2D enemyTexture=LoadTexture("resource/GREEN-GHOST-RESRC/03.SPRITE SHEET/PURPLE-IDLE.png");
 
 private:
     Vector2 m_pos={0.f,0.f};

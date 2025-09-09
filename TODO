@@ -6,9 +6,9 @@ make ENEMY entity behavior
 make ENEMY entity collision
 make SPAWNER entity animation
 make ENEMY entity random jump timer
+refactor ENEMY initTexture function to load texture file only once (use pointer)
 
 TASKS remaining:
-refactor ENEMY initTexture function to load texture file only once (use pointer)
 make ENEMY entity random speed and direction
 make simple text file to convert to array for level design
 fix the fire laser sound effect glitching when holding down mouse button

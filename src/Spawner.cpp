@@ -137,6 +137,7 @@ void Spawner::drawAttackAnimation(){
 void Spawner::spawnEnemy(){
     spawnCount--;
     Enemy* enemy = new Enemy(this->m_pos,100.f);
+    enemy->setTexture(&enemyTexture);
     enemyVector.push_back(enemy);
     std::cout<<"Enemy entity spawn."<<"\n";
 }
