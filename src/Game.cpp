@@ -6,6 +6,7 @@ Game::Game(){
 
 Game::~Game(){
     UnloadMusicStream(introMusic);
+    UnloadMusicStream(loopMusic);
 }
 
 void Game::init(){
@@ -19,6 +20,7 @@ void Game::init(){
 
 void Game::handleInput(){
     if(IsKeyPressed(KEY_ENTER)){
+        GameState=LOOP;
         introLoop={false};
         gameLoop={true};
     }
@@ -29,33 +31,34 @@ void Game::handleInput(){
 
 void Game::update(){
     this->updateMusic();
-    if(gameLoop==true){
-        player->update();
-        spawner->update();
-        this->updatePlayerCollision();
-        this->updateEnemyCollision();
-        this->updateEnemy();
-        this->updateBulletCollision();
-        this->deleteInactiveBullet();
-        this->updateCameraCentre(&camera,GetScreenWidth(),GetScreenHeight());
-        // this->updateMusic();
+
+    switch(GameState)
+    {
+        case INTRO:
+            this->drawIntroScreen();
+            break;
+        case LOOP:
+            player->update();
+            spawner->update();
+            this->updatePlayerCollision();
+            this->updateEnemyCollision();
+            this->updateEnemy();
+            this->updateBulletCollision();
+            this->deleteInactiveBullet();
+            this->updateCameraCentre(&camera,GetScreenWidth(),GetScreenHeight());
+            break;
     }
-    // player->update();
-    // spawner->update();
-    // this->updatePlayerCollision();
-    // this->updateEnemyCollision();
-    // this->updateEnemy();
-    // this->updateBulletCollision();
-    // this->deleteInactiveBullet();
-    // this->updateCameraCentre(&camera,GetScreenWidth(),GetScreenHeight());
-    // this->updateMusic();
 }
 
 void Game::draw(){
-    if(gameLoop==true){
-        this->drawGameLoop();
-    }else{
-        this->drawIntroScreen();
+    switch(GameState)
+    {
+        case INTRO:
+            this->drawIntroScreen();
+            break;
+        case LOOP:
+            this->drawGameLoop();
+            break;
     }
 }
 
@@ -86,6 +89,7 @@ void Game::updateCameraCentre(Camera2D* camera, float width, float height){
     camera->target=player->getPos();
 }
 
+// FUNCTION not in use -> can delete
 void Game::updateCameraCentreInWindow(Camera2D* camera, float width, float height, float num){
     camera->target=player->getPos();
     camera->offset=(Vector2){width/2.f,height/2.f};
@@ -247,6 +251,8 @@ void Game::deleteInactiveBullet(){
 
 void Game::initMusic(){
     introMusic=LoadMusicStream("resource/MUSIC/DARK-FANTASY-MUSIC-02.mp3");
+    loopMusic=LoadMusicStream("resource/MUSIC/DARK-FANTASY-MUSIC-01.mp3");
+
     SetMusicVolume(introMusic,0.5f);
     PlayMusicStream(introMusic);
 }

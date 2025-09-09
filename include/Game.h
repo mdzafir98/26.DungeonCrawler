@@ -66,6 +66,7 @@ private:
     void initMusic();
     void updateMusic();
     Music introMusic, loopMusic, gameOverMusic;
+    Music currMusic;
 
     // SOUND EFFECT
     Sound shootLaser, jumpSound;
