@@ -18,28 +18,60 @@ void Game::init(){
 }
 
 void Game::handleInput(){
-    this->playerControls();
+    if(IsKeyPressed(KEY_ENTER)){
+        introLoop={false};
+        gameLoop={true};
+    }
+    if(gameLoop==true){
+        this->playerControls();
+    }
 }
 
 void Game::update(){
-    player->update();
-    spawner->update();
-    this->updatePlayerCollision();
-    this->updateEnemyCollision();
-    this->updateEnemy();
-    this->updateBulletCollision();
-    this->deleteInactiveBullet();
-    this->updateCameraCentre(&camera,GetScreenWidth(),GetScreenHeight());
     this->updateMusic();
+    if(gameLoop==true){
+        player->update();
+        spawner->update();
+        this->updatePlayerCollision();
+        this->updateEnemyCollision();
+        this->updateEnemy();
+        this->updateBulletCollision();
+        this->deleteInactiveBullet();
+        this->updateCameraCentre(&camera,GetScreenWidth(),GetScreenHeight());
+        // this->updateMusic();
+    }
+    // player->update();
+    // spawner->update();
+    // this->updatePlayerCollision();
+    // this->updateEnemyCollision();
+    // this->updateEnemy();
+    // this->updateBulletCollision();
+    // this->deleteInactiveBullet();
+    // this->updateCameraCentre(&camera,GetScreenWidth(),GetScreenHeight());
+    // this->updateMusic();
 }
 
 void Game::draw(){
+    if(gameLoop==true){
+        this->drawGameLoop();
+    }else{
+        this->drawIntroScreen();
+    }
+}
+
+// draw function for the main game loop
+void Game::drawGameLoop(){
     BeginMode2D(camera);
         this->drawBackground();
         this->drawGameInstructions();
         player->draw();
         spawner->draw();
     EndMode2D();
+}
+
+// TODO: add static background image
+void Game::drawIntroScreen(){
+    DrawText("Press ENTER to \nstart the GAME!",100,100,30,RAYWHITE);
 }
 
 void Game::initCamera(){

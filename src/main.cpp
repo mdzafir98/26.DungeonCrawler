@@ -43,7 +43,7 @@ int main(void)
         game.handleInput();
         game.update();
         BeginDrawing();
-            ClearBackground(BACKGROUND_COLOR);
+            ClearBackground(BLACK);
             game.draw();
         EndDrawing();
     }

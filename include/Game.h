@@ -24,6 +24,12 @@ public:
     void draw();
 
 private:
+    // Intro screen
+    void drawIntroScreen();
+    void menuControls();
+    void drawGameLoop();
+
+
     // CAMERA FUNCTIONS
     void initCamera();
     void updateCameraCentre(Camera2D* camera, float width, float height);
@@ -43,6 +49,10 @@ private:
     void updateEnemy();
 
 private:
+    // GAME LOOP BOOL FLAGS
+    bool introLoop={true};
+    bool gameLoop={false};
+
     // CAMERA
     Camera2D camera={0};
 
