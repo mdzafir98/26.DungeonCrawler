@@ -16,6 +16,7 @@ public:
     void init(){
         this->initPlatform();
         this->initWall();
+        this->initStatic();
         std::cout<<"Background initialised successfully."<<"\n";
     }
 
@@ -43,14 +44,33 @@ public:
         }
     }
 
+    // init static background for intro screen
+    void initStatic(){
+        for(int i=0; i<8; i++){
+            for(int j=0; j<8; j++){
+                if(STATIC_MAP[j][i]==0){
+                    Wall* wall = new Wall(i*64,j*64,normalBGPtr);
+                    staticBGVector.push_back(wall);
+                }
+            }
+        }
+    }
+
     void draw(){
-        // DRAW THE PLATFORMS
+        // draw the platforms
         for(auto& wall:wallVector){
             wall->draw();
         }
 
-        // DRAW THE BACKGROUND
+        // draw the background
         for(auto& bg:bgVector){
+            bg->draw(DARKGRAY);
+        }
+    }
+
+    void drawStatic(){
+        // draw static background
+        for(auto& bg:staticBGVector){
             bg->draw(DARKGRAY);
         }
     }
@@ -59,7 +79,7 @@ private:
     // VARIABLES
     int x={0};
 
-    // PLATFORM TEXTURES
+    // PLATFORM TEXTURES and POINTERS
     Texture2D normalWall=LoadTexture("resource/BRICK-WALL/02.PNG FILES/BRICK-WALL-ASE1.png");
     Texture2D crackWall=LoadTexture("resource/BRICK-WALL/02.PNG FILES/BRICK-WALL-ASE2.png");
     Texture2D normalWall2=LoadTexture("resource/BRICK-WALL/02.PNG FILES/BRICK-WALL-ASE1.png");
@@ -81,17 +101,18 @@ public:
 
     // vector that contains the background
     std::vector<Wall*> bgVector;
+    std::vector<Wall*> staticBGVector;
 
-private:
-    int MAP[8][8]={
-        {0,0,0,0,0,0,0,0},
-        {0,0,0,0,0,0,0,1},
-        {1,1,0,0,0,0,1,1},
+private: // MAPS
+    int STATIC_MAP[8][8]={
         {0,0,0,0,0,0,0,0},
         {0,0,0,0,0,0,0,0},
-        {0,0,0,0,0,1,1,1},
         {0,0,0,0,0,0,0,0},
-        {1,0,0,0,1,0,0,0}
+        {0,0,0,0,0,0,0,0},
+        {0,0,0,0,0,0,0,0},
+        {0,0,0,0,0,0,0,0},
+        {0,0,0,0,0,0,0,0},
+        {0,0,0,0,0,0,0,0}
     };
 
     int TOWER_MAP[16][8]={

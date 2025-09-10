@@ -1,4 +1,5 @@
 #include "../include/Entity.h"
+bool Entity::canGetDamaged=true;
 
 Entity::Entity(Vector2 pos, Color color){
     m_pos=pos;
@@ -263,6 +264,20 @@ void Entity::attack(){
         canShoot=false;
     }
     canShoot=true;
+}
+
+// TODO: get this function to run once
+void Entity::getDamaged(int dmg){
+    if(m_health>0 && canGetDamaged){
+        m_health = m_health-dmg;
+    }else if(m_health<0){
+        m_health=0;
+    }
+    canGetDamaged=false;
+}
+
+int Entity::getHealth(){
+    return m_health;
 }
 
 void Entity::updateBullet(){

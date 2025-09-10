@@ -2,6 +2,7 @@
 #include <raylib.h>
 #include <raymath.h>
 #include "Bullet.h"
+#include "Timer.h"
 
 #include <iostream>
 #include <string>
@@ -67,17 +68,20 @@ public:
 
     // ATTACK FUNCTIONS
     void attack();
+    void getDamaged(int dmg);
+    int getHealth();
     void drawBullet();
     void updateBullet();
     std::vector<Bullet> bulletVector;
 
 private:
     virtual void updateEntityCollision();
+    void initTimer();
 
 public:
     float m_groundLevel={(float)(GetScreenHeight())};
     float* m_groundLevelPtr=&m_groundLevel; // pointer to the groundLevel
-    // Vector2 m_velocity={0.f,0.f};
+    static bool canGetDamaged;
 
 private:
     // BASIC VARIABLES
@@ -90,7 +94,7 @@ private:
     Vector2 mousePos={0.f,0.f};
     bool canShoot={true};
     bool lookingRight={false};
-    // bool lookRight={false};
+    int m_health={10};
 
     // JUMP VARIABLES
     bool canJump={true};
@@ -113,4 +117,7 @@ private:
     // ATTACK VARIABLES
     double lastFireTime={0.f};
     float m_fireRate={0.35f};
+
+    // TIMER
+    
 };

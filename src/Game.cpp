@@ -14,17 +14,22 @@ void Game::init(){
     this->initSound();
     this->initCamera();
     player = new Entity({128,384},MAROON);
-    spawner = new Spawner({128,256});
+    spawner = new Spawner({448,64});
     std::cout<<"Game instance initialised."<<"\n";
 }
 
 void Game::handleInput(){
-    if(IsKeyPressed(KEY_ENTER)){
+    // handle game state logic
+    if(IsKeyPressed(KEY_ENTER) && GameState==INTRO){
         GameState=LOOP;
         introLoop={false};
         gameLoop={true};
+
+        // play game loop music
+        SetMusicVolume(loopMusic,0.75f);
+        PlayMusicStream(loopMusic);
     }
-    if(gameLoop==true){
+    if(GameState==LOOP){
         this->playerControls();
     }
 }
@@ -35,17 +40,19 @@ void Game::update(){
     switch(GameState)
     {
         case INTRO:
-            this->drawIntroScreen();
             break;
         case LOOP:
             player->update();
             spawner->update();
             this->updatePlayerCollision();
             this->updateEnemyCollision();
+            this->updatePlayerEnemyCollision();
             this->updateEnemy();
             this->updateBulletCollision();
             this->deleteInactiveBullet();
             this->updateCameraCentre(&camera,GetScreenWidth(),GetScreenHeight());
+            break;
+        case GAME_OVER:
             break;
     }
 }
@@ -54,10 +61,14 @@ void Game::draw(){
     switch(GameState)
     {
         case INTRO:
-            this->drawIntroScreen();
+            this->drawIntroBackground();
+            this->drawIntroMenu();
             break;
         case LOOP:
             this->drawGameLoop();
+            break;
+        case GAME_OVER:
+            this->drawGameOver();
             break;
     }
 }
@@ -67,13 +78,22 @@ void Game::drawGameLoop(){
     BeginMode2D(camera);
         this->drawBackground();
         this->drawGameInstructions();
-        player->draw();
         spawner->draw();
+        player->draw();
     EndMode2D();
 }
 
+// TODO: add game over logic
+void Game::drawGameOver(){
+
+}
+
 // TODO: add static background image
-void Game::drawIntroScreen(){
+void Game::drawIntroBackground(){
+    background.drawStatic();
+}
+
+void Game::drawIntroMenu(){
     DrawText("Press ENTER to \nstart the GAME!",100,100,30,RAYWHITE);
 }
 
@@ -109,7 +129,6 @@ void Game::updateCameraCentreInWindow(Camera2D* camera, float width, float heigh
     if(min.y>0){
         camera->offset.y = height/2-min.y;
     }
-
 }
 
 void Game::drawBackground(){
@@ -203,6 +222,15 @@ void Game::updateEnemyCollision(){
     }
 }
 
+void Game::updatePlayerEnemyCollision(){
+    for(auto& enemy:spawner->enemyVector){
+        if(CheckCollisionRecs(enemy->getRect(),player->getRect())){
+            player->getDamaged(1);
+            std::cout<<"PLAYER HP: "<<player->getHealth()<<"\n";
+        }
+    }
+}
+
 void Game::updateEnemy(){
 
     // delete the enemy that got killed and remove from std::vector
@@ -250,10 +278,11 @@ void Game::deleteInactiveBullet(){
 }
 
 void Game::initMusic(){
-    introMusic=LoadMusicStream("resource/MUSIC/DARK-FANTASY-MUSIC-02.mp3");
-    loopMusic=LoadMusicStream("resource/MUSIC/DARK-FANTASY-MUSIC-01.mp3");
+    introMusic=LoadMusicStream("resource/MUSIC/DARK-FANTASY-MUSIC-01.mp3");
+    loopMusic=LoadMusicStream("resource/MUSIC/DARK-FANTASY-MUSIC-02.mp3");
+    gameOverMusic=LoadMusicStream("resource/MUSIC/DARK-FANTASY-GAME-OVER.mp3");
 
-    SetMusicVolume(introMusic,0.5f);
+    SetMusicVolume(introMusic,0.75f);
     PlayMusicStream(introMusic);
 }
 

@@ -24,11 +24,11 @@ public:
     void draw();
 
 private:
-    // Intro screen
-    void drawIntroScreen();
-    void menuControls();
+    // GAME DRAW FUNCTIONS
+    void drawIntroBackground();
+    void drawIntroMenu();
     void drawGameLoop();
-
+    void drawGameOver();
 
     // CAMERA FUNCTIONS
     void initCamera();
@@ -43,6 +43,7 @@ private:
     void updatePlayerCollision();
     void updateBulletCollision();
     void deleteInactiveBullet();
+    void updatePlayerEnemyCollision();
 
     // ENEMY FUNCTIONS
     void updateEnemyCollision();
@@ -56,7 +57,7 @@ private:
     // CAMERA
     Camera2D camera={0};
 
-    GAME_STATE GameState=INTRO;
+    GAME_STATE GameState={INTRO};
     Entity* player;
     Background background;
     bool lookRight={false};
