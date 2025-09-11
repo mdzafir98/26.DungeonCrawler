@@ -1,5 +1,4 @@
 #include "../include/Entity.h"
-bool Entity::canGetDamaged=true;
 
 Entity::Entity(Vector2 pos, Color color){
     m_pos=pos;
@@ -268,12 +267,31 @@ void Entity::attack(){
 
 // TODO: get this function to run once
 void Entity::getDamaged(int dmg){
-    if(m_health>0 && canGetDamaged){
-        m_health = m_health-dmg;
-    }else if(m_health<0){
-        m_health=0;
+    if(canGetDamaged==true){
+        startTimer(&getDamagedTimer,canGetDamagedLife);
+        this->deductEntityHealth(dmg);
+        canGetDamaged=false;
     }
-    canGetDamaged=false;
+    updateTimer(&getDamagedTimer);
+    stateLifetime(&getDamagedTimer);
+    if(timerDone(&getDamagedTimer)){
+        canGetDamaged=true;
+    }
+}
+
+void Entity::deductEntityHealth(int damage){
+    if(m_health>0){
+            m_health = m_health - damage;
+            this->getKnockedBack();
+        }else if(m_health<0){
+            m_health=0;
+        }
+}
+
+// TODO: work on knockback function
+void Entity::getKnockedBack(){
+    m_pos.x += 10.f;
+    std::cout<<"Entity get knocked back!"<<"\n";
 }
 
 int Entity::getHealth(){

@@ -76,12 +76,12 @@ public:
 
 private:
     virtual void updateEntityCollision();
-    void initTimer();
+    void getKnockedBack();
+    void deductEntityHealth(int damage);
 
 public:
     float m_groundLevel={(float)(GetScreenHeight())};
     float* m_groundLevelPtr=&m_groundLevel; // pointer to the groundLevel
-    static bool canGetDamaged;
 
 private:
     // BASIC VARIABLES
@@ -117,7 +117,10 @@ private:
     // ATTACK VARIABLES
     double lastFireTime={0.f};
     float m_fireRate={0.35f};
+    float knockedDistance={100.f};
 
     // TIMER
-    
+    Timer getDamagedTimer={0};
+    float canGetDamagedLife={0.25f};
+    bool canGetDamaged={true};
 };
