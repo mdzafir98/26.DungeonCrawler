@@ -15,6 +15,7 @@ void Game::init(){
     this->initCamera();
     player = new Entity({128,384},MAROON);
     spawner = new Spawner({448,64});
+    boss = new Boss({512,0});
     std::cout<<"Game instance initialised."<<"\n";
 }
 
@@ -42,6 +43,7 @@ void Game::update(){
         case INTRO:
             break;
         case LOOP:
+            // boss->update();
             player->update();
             spawner->update();
             this->updatePlayerCollision();
@@ -78,6 +80,7 @@ void Game::drawGameLoop(){
     BeginMode2D(camera);
         this->drawBackground();
         this->drawGameInstructions();
+        // boss->draw();
         spawner->draw();
         player->draw();
     EndMode2D();
@@ -94,7 +97,8 @@ void Game::drawIntroBackground(){
 }
 
 void Game::drawIntroMenu(){
-    DrawText("Press ENTER to \nstart the GAME!",100,100,30,RAYWHITE);
+    DrawText("DUNGEON CRAWLER v1.0",50,100,30,DARKPURPLE);
+    DrawText("Press ENTER to \nstart the GAME!",50,130,25,RAYWHITE);
 }
 
 void Game::initCamera(){

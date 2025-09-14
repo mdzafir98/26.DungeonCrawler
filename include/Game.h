@@ -5,11 +5,13 @@
 #include "../include/Entity.h"
 #include "../include/Background.h"
 #include "../include/Spawner.h"
+#include "../include/Boss.h"
 
 enum GAME_STATE{
-    INTRO=0,
-    LOOP=1,
-    GAME_OVER=2
+    INTRO = 0,
+    LOOP = 1,
+    GAME_OVER = 2,
+    BOSS_FIGHT = 3
 };
 
 class Game{
@@ -49,6 +51,9 @@ private:
     void updateEnemyCollision();
     void updateEnemy();
 
+    // BOSS FUNCTIONS
+    void updateBoss();
+
 private:
     // GAME LOOP BOOL FLAGS
     bool introLoop={true};
@@ -73,6 +78,7 @@ private:
     Sound shootLaser, jumpSound;
     void initSound();
 
-    // ENEMY TEST
+    // ENEMY
     Spawner* spawner;
+    Boss* boss;
 };

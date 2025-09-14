@@ -1,4 +1,4 @@
-g++ -g -O0 -o a.out src/main.cpp src/Game.cpp src/Entity.cpp src/Bullet.cpp src/Spawner.cpp src/Enemy.cpp -lraylib -lGL -lm -lpthread -ldl -lrt -lX11
+g++ -g -O0 -o a.out src/main.cpp src/Game.cpp src/Entity.cpp src/Bullet.cpp src/Spawner.cpp src/Enemy.cpp src/Boss.cpp -lraylib -lGL -lm -lpthread -ldl -lrt -lX11
 
 # .BASH SCRIPT
 
