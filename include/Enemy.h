@@ -12,7 +12,7 @@ public:
     Enemy() = default;
 
     void init();
-    void draw();
+    virtual void draw();
     virtual void update();
 
     Vector2 getPos() const;

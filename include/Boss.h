@@ -1,5 +1,6 @@
 #pragma once
 #include "Enemy.h"
+#include "Fireball.h"
 #include <vector>
 
 class Boss : public Enemy{
@@ -7,7 +8,9 @@ public:
     Boss(Vector2 pos);
     void init();
     void initTexture() override;
-    void update() override;
+    void initTimer();
+    void draw() override;
+    void update(Vector2 playerPos);
 
     void moveRight() override;
     void moveLeft() override;
@@ -15,7 +18,13 @@ public:
     void updateAnimation() override;
     void shootFireball(Vector2 playerPos);
 
-private:
+public:
     float spriteSize = 128.f;
-    std::vector<Circle> fireballVector;
+    std::vector<Fireball> fireballVector;
+
+private:
+    // TIMER
+    float m_shootLifetime = {0.f};
+    bool canShoot = {true};
+    Timer shootTimer = {0};
 };

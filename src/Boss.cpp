@@ -7,17 +7,51 @@ Boss::Boss(Vector2 pos){
 
 void Boss::init(){
     this->initTexture();
+    this->initTimer();
 }
 
-// TODO: assign the correct texture
+void Boss::initTimer(){
+    m_shootLifetime = 2.f;
+}
+
+void Boss::draw(){
+    // draw animation cycle
+    if(active){
+        DrawTextureRec(m_texture, frameRec, m_pos, m_shade);
+    }
+
+    // draw fireballs shot by BOSS entity
+    for(auto& i : fireballVector){
+        i.draw();
+    }
+}
+
 void Boss::initTexture(){
     m_texture = LoadTexture("resource/BOSS/03.SPRITE SHEET/IDLE.png");
     frameRec = {0.f,0.f,128.f,128.f};
 }
 
-void Boss::update(){
+void Boss::update(Vector2 playerPos){
     if(active){
         this->updateAnimation();
+    }
+
+    // shoot fireball every few seconds
+    if(canShoot == true){
+        startTimer(&shootTimer, m_shootLifetime);
+        std::cout << "Fireball vector: " << fireballVector.size() << "\n";
+        canShoot = false;
+    }
+    updateTimer(&shootTimer);
+    if(timerDone(&shootTimer)){
+        this->shootFireball(playerPos);
+        fireballVector.push_back(Fireball({this->m_pos.x + spriteSize/2, this->m_pos.y + spriteSize/2}, 
+            {playerPos.x + 32.f, playerPos.y + 32.f}));
+        canShoot = true;
+    }
+
+    for(auto& i : fireballVector){
+        i.update();
     }
 }
 
@@ -42,5 +76,5 @@ void Boss::updateAnimation(){
 }
 
 void Boss::shootFireball(Vector2 playerPos){
-
+    std::cout << "Player pos: " << playerPos.x << ", " << playerPos.y << "\n";
 }
