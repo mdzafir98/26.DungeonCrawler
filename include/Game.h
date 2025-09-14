@@ -75,7 +75,7 @@ private:
     Music currMusic;
 
     // SOUND EFFECT
-    Sound shootLaser, jumpSound;
+    Sound shootLaser, jumpSound, fireballSound;
     void initSound();
 
     // ENEMY

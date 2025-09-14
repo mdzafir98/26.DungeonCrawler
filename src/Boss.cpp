@@ -37,18 +37,18 @@ void Boss::update(Vector2 playerPos){
     }
 
     // shoot fireball every few seconds
-    if(canShoot == true){
-        startTimer(&shootTimer, m_shootLifetime);
-        std::cout << "Fireball vector: " << fireballVector.size() << "\n";
-        canShoot = false;
-    }
-    updateTimer(&shootTimer);
-    if(timerDone(&shootTimer)){
-        this->shootFireball(playerPos);
-        fireballVector.push_back(Fireball({this->m_pos.x + spriteSize/2, this->m_pos.y + spriteSize/2}, 
-            {playerPos.x + 32.f, playerPos.y + 32.f}));
-        canShoot = true;
-    }
+    // if(canShoot == true){
+    //     startTimer(&shootTimer, m_shootLifetime);
+    //     std::cout << "Fireball vector: " << fireballVector.size() << "\n";
+    //     canShoot = false;
+    // }
+    // updateTimer(&shootTimer);
+    // if(timerDone(&shootTimer)){
+    //     this->shootFireball(playerPos);
+    //     fireballVector.push_back(Fireball({this->m_pos.x + spriteSize/2, this->m_pos.y + spriteSize/2}, 
+    //         {playerPos.x + 32.f, playerPos.y + 32.f}));
+    //     canShoot = true;
+    // }
 
     for(auto& i : fireballVector){
         i.update();
@@ -71,7 +71,7 @@ void Boss::updateAnimation(){
         if(currFrame > 4){
             currFrame = 0;
         }
-        frameRec.x = (float)currFrame*(float)m_texture.width/4;
+        frameRec.x = (float)currFrame * (float)m_texture.width/4;
     }
 }
 

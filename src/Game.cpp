@@ -43,7 +43,7 @@ void Game::update(){
         case INTRO:
             break;
         case LOOP:
-            boss->update(player->getPos());
+            this->updateBoss();
             player->update();
             spawner->update();
             this->updatePlayerCollision();
@@ -316,4 +316,23 @@ void Game::updateMusic(){
 void Game::initSound(){
     shootLaser = LoadSound("resource/SOUNDS/SHOOT-LASER.ogg");
     jumpSound = LoadSound("resource/SOUNDS/JUMP.ogg");
+    fireballSound = LoadSound("resource/SOUNDS/FIREBALL.ogg");
+}
+
+void Game::updateBoss(){
+    boss->update(player->getPos());
+    // shooting fireball mechanic
+    // shoot fireball every few seconds
+    if(boss->canShoot == true){
+        startTimer(&boss->shootTimer, boss->m_shootLifetime);
+        std::cout << "Fireball vector: " << boss->fireballVector.size() << "\n";
+        boss->canShoot = false;
+    }
+    updateTimer(&boss->shootTimer);
+    if(timerDone(&boss->shootTimer)){
+        PlaySound(fireballSound);
+        boss->fireballVector.push_back(Fireball({boss->m_pos.x + boss->spriteSize/2, boss->m_pos.y + boss->spriteSize/2}, 
+            {player->getPos().x + 32.f, player->getPos().y + 32.f}));
+        boss->canShoot = true;
+    }
 }

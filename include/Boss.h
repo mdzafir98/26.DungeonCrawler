@@ -22,7 +22,6 @@ public:
     float spriteSize = 128.f;
     std::vector<Fireball> fireballVector;
 
-private:
     // TIMER
     float m_shootLifetime = {0.f};
     bool canShoot = {true};
