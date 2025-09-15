@@ -9,7 +9,7 @@
 #include <vector>
 #include <cmath>
 
-enum State{
+enum class State{
     IDLE = 0,
     WALK = 1,
     ATTACK = 2,
@@ -112,7 +112,7 @@ private:
     int currFrame = {0};
     int frameCounter = {0};
     int frameSpeed = {10};
-    State m_entityState = {IDLE};
+    State m_entityState = State::IDLE;
 
     // ATTACK VARIABLES
     double lastFireTime = {0.f};

@@ -8,7 +8,7 @@ Spawner::Spawner(Vector2 pos){
 void Spawner::init(){
     this->initTimer();
     this->initTexture();
-    m_state = {WAIT};
+    m_state = {SpawnerState::WAIT};
 }
 
 void Spawner::initTexture(){
@@ -26,13 +26,13 @@ void Spawner::draw(){
     // draw entity according to state
     switch(m_state)
     {
-        case WAIT:
+        case SpawnerState::WAIT:
             drawIdleAnimation();
             break;
-        case SPAWNING:
+        case SpawnerState::SPAWNING:
             drawSpawnAnimation();
             break;
-        case SLEEP:
+        case SpawnerState::SLEEP:
             drawAttackAnimation();
             break;
     }
@@ -47,13 +47,13 @@ void Spawner::update(){
 
     switch(m_state)
     {
-        case WAIT:
+        case SpawnerState::WAIT:
             updateIdleAnimation();
             break;
-        case SPAWNING:
+        case SpawnerState::SPAWNING:
             updateSpawnAnimation();
             break;
-        case SLEEP:
+        case SpawnerState::SLEEP:
             updateAttackAnimation();
             break;
     }
@@ -67,16 +67,16 @@ void Spawner::update(){
         updateTimer(&spawnTimer);
         // stateLifetime(&spawnTimer);
         if(spawnTimer.m_lifetime < 5.f){
-            m_state = {SPAWNING};
+            m_state = {SpawnerState::SPAWNING};
         }else{
-            m_state = {WAIT};
+            m_state = {SpawnerState::WAIT};
         }
         if(timerDone(&spawnTimer)){
             this->spawnEnemy();
             canSpawn = {false};
         }
     }else{
-        m_state = {SLEEP};
+        m_state = {SpawnerState::SLEEP};
     }
 
     // update enemy in vector

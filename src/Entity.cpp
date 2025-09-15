@@ -13,7 +13,7 @@ Entity::~Entity(){
 
 void Entity::init(){
     this->initTexture();
-    m_entityState = {IDLE};
+    m_entityState = State::IDLE;
     std::cout << "Entity initialised successfully." << "\n";
 }
 
@@ -38,18 +38,18 @@ void Entity::update(){
     this->updateEntityCollision();
     switch(m_entityState)
     {
-        case IDLE:
+        case State::IDLE:
             updateIdleAnimation();
             break;
-        case WALK:
+        case State::WALK:
             updateWalkAnimation();
             break;
-        case ATTACK:
+        case State::ATTACK:
             updateAttackAnimation();
             break;
-        case JUMP:
+        case State::JUMP:
             break;
-        case FALL:
+        case State::FALL:
             break;
     }
 
@@ -119,9 +119,6 @@ void Entity::updateEntityDirection(){
         lookingRight = false;
         this->flipLeft();
     }
-    // std::cout<<"DATA: "<<"\n";
-    // std::cout<<"mouse-x: "<<mousePos.x<<"\n";
-    // std::cout<<"pos-x: "<<(getPos().x+32)<<"\n";
 }
 
 Rectangle Entity::getRect() const{
@@ -133,19 +130,19 @@ void Entity::draw(){
     // DRAW ENTITY
     switch(m_entityState)
     {
-        case IDLE:
+        case State::IDLE:
             drawIdleAnimation();
             break;
-        case WALK:
+        case State::WALK:
             drawWalkAnimation();
             break;
-        case ATTACK:
+        case State::ATTACK:
             drawAttackAnimation();
             break;
-        case JUMP:
+        case State::JUMP:
             drawJumpAnimation();
             break;
-        case FALL:
+        case State::FALL:
             drawFallAnimation();
             break;
     }
@@ -288,7 +285,6 @@ void Entity::deductEntityHealth(int damage){
         }
 }
 
-// TODO: work on knockback function
 void Entity::getKnockedBack(){
     m_pos.x += 10.f;
 }

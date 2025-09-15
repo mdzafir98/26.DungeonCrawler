@@ -88,7 +88,7 @@ void Game::drawGameLoop(){
 
 // TODO: add game over logic
 void Game::drawGameOver(){
-
+    
 }
 
 // TODO: add static background image
@@ -150,19 +150,19 @@ void Game::playerControls(){
     // MOVE CONTROLS
     if(IsKeyDown(KEY_A)){
         player->flipLeft();
-        player->setState(WALK);
+        player->setState(State::WALK);
         player->moveLeft();
     }else if(IsKeyDown(KEY_D)){
         player->flipRight();
-        player->setState(WALK);
+        player->setState(State::WALK);
         player->moveRight();
     }else{
-        player->setState(IDLE);
+        player->setState(State::IDLE);
     }
 
     // JUMP CONTROLS
     if(IsKeyPressed(KEY_SPACE)){
-        player->setState(JUMP);
+        player->setState(State::JUMP);
         player->jump();
         PlaySound(jumpSound);
     }
@@ -170,7 +170,7 @@ void Game::playerControls(){
     // SHOOT CONTROLS
     // need to fix sound gliching when holding down fire button
     if(IsMouseButtonPressed(MOUSE_BUTTON_LEFT)){
-        player->setState(ATTACK);
+        player->setState(State::ATTACK);
         player->attack();
         PlaySound(shootLaser);
     }
@@ -237,13 +237,13 @@ void Game::updatePlayerEnemyCollision(){
 
 void Game::updateEnemy(){
     // delete the enemy that got killed and remove from std::vector
-    unsigned counter=0;
+    unsigned counter = 0;
     for(auto& enemy : spawner->enemyVector){
         if(enemy->active == false){
             delete spawner->enemyVector.at(counter);
             spawner->enemyVector.erase(spawner->enemyVector.begin()+counter);
             --counter;
-            std::cout<<"Enemy vector: "<< spawner->enemyVector.size()<<"\n";
+            std::cout << "Enemy vector: "<< spawner->enemyVector.size()<< "\n";
         }
         ++counter;
     }
@@ -252,7 +252,7 @@ void Game::updateEnemy(){
 void Game::updateBulletCollision(){
     // bullet-wall collision
     for(auto& bullet : player->bulletVector){
-        for(auto& wall:background.wallVector){
+        for(auto& wall : background.wallVector){
             if(CheckCollisionRecs(bullet.getRect(), wall->getRect())){
                 bullet.active = {false};
             }
@@ -294,7 +294,7 @@ void Game::initMusic(){
     loopMusic = LoadMusicStream("resource/MUSIC/DARK-FANTASY-MUSIC-02.mp3");
     gameOverMusic = LoadMusicStream("resource/MUSIC/DARK-FANTASY-GAME-OVER.mp3");
 
-    SetMusicVolume(introMusic,0.75f);
+    SetMusicVolume(introMusic, 0.75f);
     PlayMusicStream(introMusic);
 }
 

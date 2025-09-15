@@ -4,7 +4,7 @@
 #include <vector>
 #include "Enemy.h"
 
-enum SpawnerState{
+enum class SpawnerState{
     WAIT = 0,
     SPAWNING = 1,
     SLEEP = 2
