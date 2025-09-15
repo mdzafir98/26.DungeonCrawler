@@ -1,4 +1,4 @@
-TASKS completed:
+TASKS completed :
 make sprite animation for walk, jump, shoot
 work on collision with player and platform
 make scrolling platformer camera2D
@@ -10,11 +10,10 @@ refactor ENEMY initTexture function to load texture file only once (use pointer)
 fix player enemy collision to occur only once per collision
 add BOSS class for gameplay
 make BOSS sprite
+make ENEMY entity random direction
 
-TASKS remaining:
-make ENEMY entity random speed and direction
+TASKS :
 make simple text file to convert to array for level design
 fix the fire laser sound effect glitching when holding down mouse button
 fix the sounds and music for raylib web game
-add player damage knockback after enemy collision?
 add BOSS FIGHT SEQUENCE

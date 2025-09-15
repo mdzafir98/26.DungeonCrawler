@@ -100,7 +100,7 @@ void Spawner::updateIdleAnimation(){
 void Spawner::updateSpawnAnimation(){
     frameCounter++;
     if(frameCounter >= (60/frameSpeed)){
-        frameCounter =0 ;
+        frameCounter = 0;
         currFrame++;
         if(currFrame > 9){
             currFrame = 0;

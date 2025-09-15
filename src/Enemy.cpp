@@ -20,8 +20,10 @@ void Enemy::initTexture(){
 void Enemy::initTimer(){
     // generate random number between 2 and 4
     srand((unsigned int)time(NULL));
-    jumpLife = rand()%3 + 2;
+    jumpLife = rand() % 3 + 2;
+    movingRight = rand() % 2;
     std::cout << "Enemy entity jump life: " << jumpLife << "\n";
+    std::cout << "Enemy direction: " << movingRight << "\n";
 }
 
 void Enemy::draw(){
@@ -75,7 +77,7 @@ void Enemy::updateCollision(){
 
     // ENTITY COLLIDES WITH TOP-BOUND SCREEN
     if(this->m_pos.y < 0){
-        this->setPos({this->m_pos.x,0});
+        this->setPos({this->m_pos.x, 0});
     }
 }
 
@@ -124,7 +126,6 @@ void Enemy::setTexture(Texture2D* texture){
 
 void Enemy::getDamaged(){
     m_health--;
-    std::cout << "Enemy damaged." << "\n";
 }
 
 void Enemy::moveRight(){
