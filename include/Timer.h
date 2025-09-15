@@ -7,9 +7,9 @@ typedef struct{
 }Timer;
 
 // start or restart a timer with a specific lifetime
-inline void startTimer(Timer* timer,float lifetime){
+inline void startTimer(Timer* timer, float lifetime){
     if(timer != nullptr){
-        timer->m_lifetime=lifetime;
+        timer->m_lifetime = lifetime;
     }
 }
 
@@ -29,5 +29,5 @@ inline bool timerDone(Timer* timer){
 }
 
 inline void stateLifetime(Timer* timer){
-    std::cout<<"LIFETIME: "<<timer->m_lifetime<<"\n";
+    std::cout << "LIFETIME: " << timer->m_lifetime<< "\n";
 }

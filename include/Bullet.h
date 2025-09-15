@@ -19,7 +19,7 @@ public:
 
 private:
     Vector2 m_pos;
-    int m_bulletSpeed={10};
-    int m_direction={1};
-    Color m_color={GREEN};
+    int m_bulletSpeed = {10};
+    int m_direction = {1};
+    Color m_color = {GREEN};
 };

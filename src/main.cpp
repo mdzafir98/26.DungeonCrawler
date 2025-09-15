@@ -9,9 +9,9 @@
 #include <iostream>
 #include "../include/Game.h"
 
-const int SCREEN_WIDTH=512;
-const int SCREEN_HEIGHT=512;
-Color BACKGROUND_COLOR={29,27,27,255};
+const int SCREEN_WIDTH = 512;
+const int SCREEN_HEIGHT = 512;
+Color BACKGROUND_COLOR={29, 27, 27, 255};
 
 /*
 HOW TO OPEN THE WEB GAME
@@ -32,7 +32,7 @@ int main(void)
     InitAudioDevice();
 
     SetTargetFPS(60);
-    bool startMusic={false};
+    bool startMusic = {false};
     Game game;
 
     while (!WindowShouldClose()){
@@ -53,13 +53,13 @@ int main(void)
 
 void drawIntructions(){
     // DrawText("THIS IS A SIMPLE WEB GAME!",0,0,25,RAYWHITE);
-    DrawText("A/D to MOVE",0,300,20,RAYWHITE);
-    DrawText("S to SHIELD",0,320,20,RAYWHITE);
-    DrawText("LMB to ATK",0,340,20,RAYWHITE);
+    DrawText("A/D to MOVE", 0, 300, 20, RAYWHITE);
+    DrawText("S to SHIELD", 0, 320, 20, RAYWHITE);
+    DrawText("LMB to ATK", 0, 340, 20, RAYWHITE);
 }
 
 void startAudioDevice(){
     InitAudioDevice();
-    std::cout<<"Audio device is enabled in browser!"<<"\n";
+    std::cout << "Audio device is enabled in browser!" << "\n";
 }
 

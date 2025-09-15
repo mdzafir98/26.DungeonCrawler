@@ -56,17 +56,17 @@ private:
 
 private:
     // GAME LOOP BOOL FLAGS
-    bool introLoop={true};
-    bool gameLoop={false};
+    bool introLoop = {true};
+    bool gameLoop = {false};
 
     // CAMERA
-    Camera2D camera={0};
+    Camera2D camera = {0};
 
-    GAME_STATE GameState={INTRO};
+    GAME_STATE GameState  ={INTRO};
     Entity* player;
     Background background;
-    bool lookRight={false};
-    bool playerCollided={false};
+    bool lookRight = {false};
+    bool playerCollided = {false};
 
     // MUSIC
     void initMusic();

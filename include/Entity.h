@@ -10,11 +10,11 @@
 #include <cmath>
 
 enum State{
-    IDLE=0,
-    WALK=1,
-    ATTACK=2,
-    JUMP=3,
-    FALL=4
+    IDLE = 0,
+    WALK = 1,
+    ATTACK = 2,
+    JUMP = 3,
+    FALL = 4
 };
 
 class Entity{
@@ -23,7 +23,7 @@ public:
     ~Entity();
 
     // TEXTURE FUNCTIONS
-    Vector2 spriteSize={64.f,64.f};
+    Vector2 spriteSize = {64.f, 64.f};
     void init();
     virtual void initTexture();
     void setTexture(std::string filepath);
@@ -85,42 +85,42 @@ public:
 
 private:
     // BASIC VARIABLES
-    float deltaTime=GetFrameTime();
-    Vector2 m_pos={100,100};
-    Color m_shade={LIGHTGRAY};
-    Color m_color={GREEN};
-    Vector2 m_velocity={0.f,0.f};
-    float m_speed={200.f};
-    Vector2 mousePos={0.f,0.f};
-    bool canShoot={true};
-    bool lookingRight={false};
-    int m_health={10};
+    float deltaTime = GetFrameTime();
+    Vector2 m_pos = {100, 100};
+    Color m_shade = {LIGHTGRAY};
+    Color m_color = {GREEN};
+    Vector2 m_velocity = {0.f, 0.f};
+    float m_speed = {200.f};
+    Vector2 mousePos = {0.f, 0.f};
+    bool canShoot = {true};
+    bool lookingRight = {false};
+    int m_health = {10};
 
     // JUMP VARIABLES
-    bool canJump={true};
-    bool grounded={true};
+    bool canJump = {true};
+    bool grounded = {true};
     void clampToGround();
-    float m_gravity={10.f};
-    float jumpHeight={500.f};
-    float slamSpeed={100.f};
-    double lastJumpTime={0.f};
-    float m_jumpRate={0.5f};
+    float m_gravity = {10.f};
+    float jumpHeight = {500.f};
+    float slamSpeed = {100.f};
+    double lastJumpTime = {0.f};
+    float m_jumpRate = {0.5f};
 
     // ANIMATION VARIABLES
     Texture2D idleTexture, walkTexture, attackTexture, jumpTexture, fallTexture;
     Rectangle frameRec;
-    int currFrame={0};
-    int frameCounter={0};
-    int frameSpeed={10};
-    State m_entityState={IDLE};
+    int currFrame = {0};
+    int frameCounter = {0};
+    int frameSpeed = {10};
+    State m_entityState = {IDLE};
 
     // ATTACK VARIABLES
-    double lastFireTime={0.f};
-    float m_fireRate={0.35f};
-    float knockedDistance={100.f};
+    double lastFireTime = {0.f};
+    float m_fireRate = {0.35f};
+    float knockedDistance = {100.f};
 
     // TIMER
-    Timer getDamagedTimer={0};
-    float canGetDamagedLife={0.25f};
-    bool canGetDamaged={true};
+    Timer getDamagedTimer = {0};
+    float canGetDamagedLife = {0.25f};
+    bool canGetDamaged = {true};
 };
